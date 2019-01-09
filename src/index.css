@@ -13,16 +13,6 @@ code {
     monospace;
 }
 
-.btn-circle {
-    width: 30px;
-    height: 30px;
-    padding: 6px 0px;
-    border-radius: 15px;
-    text-align: center;
-    font-size: 12px;
-    line-height: 1.42857;
-}
-
 .btn-circle.btn-xl {
     width: 80px;
     height: 80px;
@@ -46,3 +36,8 @@ code {
       margin:5px;
   }
 }
+
+@media (min-width: 1200px) {
+  .btn-circle.btn-xl {
+    margin:20px;
+  } }
