@@ -1,0 +1,126 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+plugins:
+
+service: sessions-feedback
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+
+provider:
+  name: aws
+  runtime: python2.7
+  stackName: ${self:service}-CF-Template
+  logRetentionInDays: 14
+  region: eu-west-1
+  memorySize: 128
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+       - dynamodb:Query
+       - dynamodb:Scan
+       - dynamodb:GetItem
+      Resource:
+        - Fn::GetAtt:
+          - feebackSessions
+          - Arn
+
+  stage: dev
+
+functions:
+  GetSession:
+    handler: get_session.get_session
+    events:
+      - http:
+          path: info/get_session
+          method: get
+
+resources:
+  Resources:
+    feebackSessions:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:service}-${self:provider.stage}-Sessions
+        AttributeDefinitions:
+          - AttributeName: session_id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: session_id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+    #Cognito
+    CognitoIdentityPool:
+      Type: AWS::Cognito::IdentityPool
+      Properties:
+        IdentityPoolName: SessionsFeedbackIdentityPool
+        AllowUnauthenticatedIdentities: true
+
+    # IAM roles
+    CognitoIdentityPoolRoles:
+      Type: AWS::Cognito::IdentityPoolRoleAttachment
+      Properties:
+        IdentityPoolId:
+          Ref: CognitoIdentityPool
+        Roles:
+          unauthenticated:
+            Fn::GetAtt: [CognitoUnAuthRole, Arn]
+
+    # IAM role used for unauthenticated users
+    CognitoUnAuthRole:
+      Type: AWS::IAM::Role
+      Properties:
+        Path: /
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: 'Allow'
+              Principal:
+                Federated: 'cognito-identity.amazonaws.com'
+              Action:
+                - 'sts:AssumeRoleWithWebIdentity'
+              Condition:
+                StringEquals:
+                  'cognito-identity.amazonaws.com:aud':
+                    Ref: CognitoIdentityPool
+                'ForAnyValue:StringLike':
+                  'cognito-identity.amazonaws.com:amr': unauthenticated
+        Policies:
+          - PolicyName: SessionsFeedbackCognitoUnAuthorizedPolicy
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: 'Allow'
+                  Action:
+                    - 'mobileanalytics:PutEvents'
+                    - 'cognito-sync:*'
+                    - 'cognito-identity:*'
+                  Resource: '*'
+
+                # Allow users to invoke our API
+                - Effect: 'Allow'
+                  Action:
+                    - dynamodb:Query
+                    - dynamodb:Scan
+                    - dynamodb:GetItem
+                  Resource:
+                    - Fn::GetAtt:
+                      - feebackSessions
+                      - Arn
+
+Outputs:
+  IdentityPoolId:
+    Value:
+      Ref: CognitoIdentityPool

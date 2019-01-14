@@ -2,8 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
+
+if (!cookies.get('userID')) cookies.set('userID', guid(), { path: '/' });
+var userid = cookies.get('userID');
 
 var colors = ['bg-danger', 'bg-info', 'bg-warning', 'bg-primary', 'bg-success']
+
+function guid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+}
+
+var session_id = window.location.pathname.substr(1);
 
 class Circle extends React.Component {
   handleClick (i){
@@ -28,42 +45,81 @@ class Options extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hide: false
+      hide: false,
+      error: null,
+      isLoaded: false,
+      items: [],
+      score: null,
     };
   }
 
+  componentDidMount() {
+    fetch("https://s2cahw9tya.execute-api.eu-west-1.amazonaws.com/dev/info/get_session?id=" + session_id)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            items: result[0]
+          });
+      console.log(result[0])
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error:
+              {message: "Can't retrive sessions data"},
+          });
+        }
+      )
+  }
+
   handleChildClick(a, i) {
-    alert('Thanks for voting ' + a);
     this.setState({hide: true});
+    this.setState({score: a});
   }
 
   renderOptions(i) {
     return <Circle
-      value={i+1}
-      onClick={this.handleChildClick.bind(this, i+1)}
+      value={i}
+      onClick={this.handleChildClick.bind(this, i , this.state.items)}
       />;
   }
 
   render() {
-    const status = 'Session Name';
-    const {hide} = this.state;
+    const {hide, items, isLoaded, error, score} = this.state;
     if (hide) {
-        return null;
+        return (
+          <div className="container">
+            <div className="row justify-content-center"><h2>Thanks for your vote!</h2></div>
+            <div className="row justify-content-center"><h5>We have recorded the score <b>{score}</b> for the session <b>{items['Session_name']}</b> by {items['Speaker']}.</h5></div>
+          </div>
+        );
     }
+    if (error) {
+      return (
+        <div className="container-fluid badge badge-danger">
+          <div className="row justify-content-center"><h2>Error: {error.message}</h2></div>
+        </div>
+      );
+    } else if (!isLoaded) {
+      return <div className="row justify-content-center"><h2>Loading...</h2></div>;
+    } else {
     return (
       <div className="container-fluid">
         <div className="row justify-content-center"><h2>Feedback System</h2></div>
-        <div className="row justify-content-center"><h3>{status}</h3></div>
+        <div className="row justify-content-center"><h3>{items['Session_name']} by {items['Speaker']}</h3></div>
+        <div className="row justify-content-center"><h6>({items['DateTime']['Date']}, {items['DateTime']['Time']})</h6></div>
         <div className="row justify-content-center">
-          {this.renderOptions(0)}
           {this.renderOptions(1)}
           {this.renderOptions(2)}
           {this.renderOptions(3)}
           {this.renderOptions(4)}
-
+          {this.renderOptions(5)}
         </div>
       </div>
     );
+    }
   }
 }
 
