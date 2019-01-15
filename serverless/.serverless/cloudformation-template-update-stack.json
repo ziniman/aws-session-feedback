@@ -122,7 +122,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/sessions-feedback/dev/1547480387290-2019-01-14T15:39:47.290Z/sessions-feedback.zip"
+          "S3Key": "serverless/sessions-feedback/dev/1547481181637-2019-01-14T15:53:01.637Z/sessions-feedback.zip"
         },
         "FunctionName": "sessions-feedback-dev-GetSession",
         "Handler": "get_session.get_session",
@@ -140,14 +140,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "GetSessionLambdaVersion2rnPjWWgpy568Jm3oXzzRwQXfMM1Jdw78XcFehHBk": {
+    "GetSessionLambdaVersionkxwkIzRWwQrpVF8BhDBKhVImqBjHhNKdadvaBrD3Vw": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetSessionLambdaFunction"
         },
-        "CodeSha256": "2+rnP/jWWgpy568Jm3oXzzRwQXfMM1Jdw78XcFehHBk="
+        "CodeSha256": "kxwkIz+RWwQrpVF8BhDBKhVImqBjHhNKdadvaBrD3Vw="
       }
     },
     "ApiGatewayRestApi": {
@@ -221,7 +221,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1547480387295": {
+    "ApiGatewayDeployment1547481181645": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -280,6 +280,33 @@
           {
             "AttributeName": "session_id",
             "KeyType": "HASH"
+          }
+        ],
+        "BillingMode": "PAY_PER_REQUEST"
+      }
+    },
+    "feebackScores": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "TableName": "sessions-feedback-dev-Scores",
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "session_id",
+            "AttributeType": "S"
+          },
+          {
+            "AttributeName": "user_id",
+            "AttributeType": "S"
+          }
+        ],
+        "KeySchema": [
+          {
+            "AttributeName": "session_id",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "user_id",
+            "KeyType": "RANGE"
           }
         ],
         "BillingMode": "PAY_PER_REQUEST"
@@ -383,7 +410,7 @@
     "GetSessionLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetSessionLambdaVersion2rnPjWWgpy568Jm3oXzzRwQXfMM1Jdw78XcFehHBk"
+        "Ref": "GetSessionLambdaVersionkxwkIzRWwQrpVF8BhDBKhVImqBjHhNKdadvaBrD3Vw"
       }
     },
     "ServiceEndpoint": {

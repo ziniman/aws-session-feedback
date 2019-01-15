@@ -20,7 +20,8 @@ function guid() {
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
-var session_id = window.location.pathname.substr(1);
+var urlParams = new URLSearchParams(window.location.search);
+var session_id = urlParams.get('session_id');
 
 class Circle extends React.Component {
   handleClick (i){
