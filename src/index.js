@@ -92,7 +92,7 @@ class Options extends React.Component {
     if (hide) {
         return (
           <div className="container">
-            <div className="row justify-content-center"><h2>Thanks for your vote!</h2></div>
+            <div className="row justify-content-center"><h2>Thanks for your feedback!</h2></div>
             <div className="row justify-content-center"><h5>We have recorded the score <b>{score}</b> for the session <b>{items['Session_name']}</b> by {items['Speaker']}.</h5></div>
           </div>
         );
@@ -104,7 +104,7 @@ class Options extends React.Component {
         </div>
       );
     } else if (!isLoaded) {
-      return <div className="row justify-content-center"><h2>Loading...</h2></div>;
+      return <div className="row justify-content-center"><div className="loader"></div></div>;
     } else {
     return (
       <div className="container-fluid">
