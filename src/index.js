@@ -7,7 +7,7 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 if (!cookies.get('userID')) cookies.set('userID', guid(), { path: '/' });
-var userid = cookies.get('userID');
+var user_id = cookies.get('userID');
 
 var colors = ['bg-danger', 'bg-info', 'bg-warning', 'bg-primary', 'bg-success']
 
@@ -78,6 +78,14 @@ class Options extends React.Component {
   handleChildClick(a, i) {
     this.setState({hide: true});
     this.setState({score: a});
+
+    fetch('https://s2cahw9tya.execute-api.eu-west-1.amazonaws.com/dev/info/store_feedback', {
+        method: 'POST',
+        headers : new Headers(),
+        body:JSON.stringify({user_id:user_id, session_id:session_id, score:a})
+    }).then((res) => res.json())
+    .then((data) =>  console.log(data))
+    .catch((err)=>console.log(err))
   }
 
   renderOptions(i) {

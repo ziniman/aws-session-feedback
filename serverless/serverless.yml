@@ -32,6 +32,7 @@ provider:
        - dynamodb:Query
        - dynamodb:Scan
        - dynamodb:GetItem
+       - dynamodb:PutItem
       Resource:
         - Fn::GetAtt:
           - feebackSessions
@@ -41,11 +42,18 @@ provider:
 
 functions:
   GetSession:
-    handler: get_session.get_session
+    handler: sessions_feedback.get_session
     events:
       - http:
           path: info/get_session
           method: get
+  WriteFeedback:
+    handler: sessions_feedback.write_feedback
+    events:
+      - http:
+          path: info/store_feedback
+          method: post
+          cors: true
 
 resources:
   Resources:
