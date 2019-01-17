@@ -51,31 +51,23 @@ def get_session(event, context):
 def write_feedback(event, context):
     logger.info('Received event: ' + json.dumps(event))
 
-    session_id = event['queryStringParameters']['id']
+    session_id = event['body']['session_id']
+    user_id = event['body']['user_id']
+    score = event['body']['score']
 
-    try:
-    	response = table.get_item(
-        Key={
-            'session_id': session_id
-        }
-    )
+    response = scores_table.put_item(
+        Item={
+                'session_id': session_id,
+                'user_id': user_id,
+                'score': score
+                }
+        )
 
-    except ClientError as e:
-        logger.error(e.response['Error']['Message'])
-        #return event
-        raise SystemExit
-    else:
-        if (int(json.dumps(response[u'Count']))>0):
-            items = json.dumps(response[u'Items'])
-            print (items)
+    print("PutItem succeeded:")
+    print(json.dumps(response))
 
-            return {
-                'statusCode': 200,
-                'headers': { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-                'body': items
-            }
-        else:
-            return {
-                'statusCode': 404,
-                'headers': { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
-            }
+    return {
+        'statusCode': 200,
+        'headers': { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        'body': 'OK'
+    }

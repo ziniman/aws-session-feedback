@@ -37,6 +37,9 @@ provider:
         - Fn::GetAtt:
           - feebackSessions
           - Arn
+        - Fn::GetAtt:
+          - feebackScores
+          - Arn
 
   stage: dev
 
@@ -54,6 +57,7 @@ functions:
           path: info/store_feedback
           method: post
           cors: true
+          integration: lambda
 
 resources:
   Resources:

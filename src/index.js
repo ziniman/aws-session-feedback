@@ -81,7 +81,7 @@ class Options extends React.Component {
 
     fetch('https://s2cahw9tya.execute-api.eu-west-1.amazonaws.com/dev/info/store_feedback', {
         method: 'POST',
-        headers : new Headers(),
+        headers : {'Content-Type': 'application/json'},
         body:JSON.stringify({user_id:user_id, session_id:session_id, score:a})
     }).then((res) => res.json())
     .then((data) =>  console.log(data))
