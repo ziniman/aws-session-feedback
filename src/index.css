@@ -34,16 +34,28 @@ code {
 	background: url(images/loading.gif) center no-repeat;
 }
 
+.vote {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+}
+
 @media (max-width: 575.98px) {
   .btn-circle.btn-xl {
-      width: 50px;
-      height: 50px;
+      width: 43px;
+      height: 43px;
       padding: 5px 0px;
       border-radius: 25px;
       font-size: 15px;
       font-weight: 800;
       line-height: 1;
       margin:5px;
+  }
+
+  h3{
+    font-size: 1rem !important;
   }
 }
 

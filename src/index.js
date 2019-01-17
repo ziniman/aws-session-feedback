@@ -100,26 +100,26 @@ class Options extends React.Component {
     if (hide) {
         return (
           <div className="container">
-            <div className="row justify-content-center"><h2>Thanks for your feedback!</h2></div>
-            <div className="row justify-content-center"><h5>We have recorded the score <b>{score}</b> for the session <b>{items['Session_name']}</b> by {items['Speaker']}.</h5></div>
+            <div className="row m-2 text-center justify-content-center"><h2>Thanks for your feedback!</h2></div>
+            <div className="row m-2 text-center justify-content-center"><h5>We have recorded the score <b>{score}</b> for the session <b>{items['Session_name']}</b> by {items['Speaker']}.</h5></div>
           </div>
         );
     }
     if (error) {
       return (
-        <div className="container-fluid badge badge-danger">
-          <div className="row justify-content-center"><h2>Error: {error.message}</h2></div>
+        <div className="container justify-content-center text-center">
+          <div className="row badge badge-danger m-2 p-2"><h3>Error: {error.message}</h3></div>
         </div>
       );
     } else if (!isLoaded) {
-      return <div className="row justify-content-center"><div className="loader"></div></div>;
+      return <div className="loader"></div>;
     } else {
     return (
-      <div className="container-fluid">
-        <div className="row justify-content-center"><h2>Feedback System</h2></div>
-        <div className="row justify-content-center"><h3>{items['Session_name']} by {items['Speaker']}</h3></div>
-        <div className="row justify-content-center"><h6>({items['DateTime']['Date']}, {items['DateTime']['Time']})</h6></div>
-        <div className="row justify-content-center">
+      <div className="container">
+        <div className="row m-2 text-center justify-content-center"><h2>Feedback System</h2></div>
+        <div className="row m-2 text-center justify-content-center"><h3>{items['Session_name']} by {items['Speaker']}</h3></div>
+        <div className="row m-2 text-center justify-content-center"><h6>({items['DateTime']['Date']}, {items['DateTime']['Time']})</h6></div>
+        <div className="row m-2 text-center justify-content-center">
           {this.renderOptions(1)}
           {this.renderOptions(2)}
           {this.renderOptions(3)}
