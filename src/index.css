@@ -62,8 +62,8 @@ code {
 @media (min-width: 1200px) {
   .btn-circle.btn-xl {
     margin: 20px;
-    width: 210px;
-    height: 210px;
-    border-radius: 110px;
+    width: 170px;
+    height: 170px;
+    border-radius: 90px;
     font-size: 70px;
   } }

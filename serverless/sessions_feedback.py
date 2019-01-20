@@ -4,10 +4,21 @@ import boto3
 import json
 import logging
 import os
+import decimal
 from boto3.dynamodb.conditions import Key, Attr
 from botocore.exceptions import ClientError
 
 from datetime import datetime
+
+# Helper class to convert a DynamoDB item to JSON.
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, decimal.Decimal):
+            if o % 1 > 0:
+                return float(o)
+            else:
+                return int(o)
+        return super(DecimalEncoder, self).default(o)
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -34,7 +45,7 @@ def get_session(event, context):
         raise SystemExit
     else:
         if (int(json.dumps(response[u'Count']))>0):
-            items = json.dumps(response[u'Items'])
+            items = json.dumps(response[u'Items'], cls=DecimalEncoder)
             print (items)
 
             return {
