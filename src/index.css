@@ -44,10 +44,10 @@ code {
 
 @media (max-width: 575.98px) {
   .btn-circle.btn-xl {
-      width: 43px;
-      height: 43px;
+      width: 55px;
+      height: 55px;
       padding: 5px 0px;
-      border-radius: 25px;
+      border-radius: 30px;
       font-size: 15px;
       font-weight: 800;
       line-height: 1;
