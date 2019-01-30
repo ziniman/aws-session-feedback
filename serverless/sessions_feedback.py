@@ -65,12 +65,15 @@ def write_feedback(event, context):
     session_id = event['body']['session_id']
     user_id = event['body']['user_id']
     score = event['body']['score']
+    time_stamp = datetime.utcnow()
+    time_stamp = time_stamp.strftime("%Y-%m-%d %H:%M:%S")
 
     response = scores_table.put_item(
         Item={
                 'session_id': session_id,
                 'user_id': user_id,
-                'score': score
+                'score': score,
+                'time_stamp': time_stamp
                 }
         )
 

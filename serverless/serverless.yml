@@ -1,29 +1,12 @@
-# Welcome to Serverless!
-#
-# This file is the main config file for your service.
-# It's very minimal at this point and uses default values.
-# You can always add more config options for more control.
-# We've included some commented out config examples here.
-# Just uncomment any of them to get that config option.
-#
-# For full config options, check the docs:
-#    docs.serverless.com
-#
-# Happy Coding!
-
-plugins:
-
 service: sessions-feedback
 
-# You can pin your service to only deploy with a specific Serverless version
-# Check out our docs for more details
-# frameworkVersion: "=X.X.X"
-
+plugins:
+  - serverless-python-requirements
 provider:
   name: aws
   runtime: python2.7
   stackName: ${self:service}-CF-Template
-  logRetentionInDays: 14
+  logRetentionInDays: 7
   region: eu-west-1
   memorySize: 128
   iamRoleStatements:
@@ -33,6 +16,10 @@ provider:
        - dynamodb:Scan
        - dynamodb:GetItem
        - dynamodb:PutItem
+       - dynamodb:GetRecords
+       - dynamodb:GetShardIterator
+       - dynamodb:DescribeStream
+       - dynamodb:ListStreams
       Resource:
         - Fn::GetAtt:
           - feebackSessions
@@ -40,6 +27,18 @@ provider:
         - Fn::GetAtt:
           - feebackScores
           - Arn
+        - Fn::Join:
+          - ""
+          - - Fn::GetAtt:
+              - feebackScores
+              - Arn
+            - "/stream/*"
+        - Fn::Join:
+          - ""
+          - - Fn::GetAtt:
+              - feebackSessions
+              - Arn
+            - "/stream/*"
 
   stage: dev
 
@@ -58,6 +57,15 @@ functions:
           method: post
           cors: true
           integration: lambda
+  WriteSQL:
+    handler: write_sql.write_sql
+    vpc:
+      securityGroupIds:
+        - sg-061c6de2d764cf569
+      subnetIds:
+        - subnet-33645457
+        - subnet-32724644
+        - subnet-fb7904a3
 
 resources:
   Resources:
@@ -147,8 +155,3 @@ resources:
                     - Fn::GetAtt:
                       - feebackSessions
                       - Arn
-
-Outputs:
-  IdentityPoolId:
-    Value:
-      Ref: CognitoIdentityPool

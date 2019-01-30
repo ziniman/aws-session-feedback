@@ -133,6 +133,11 @@ class Options extends React.Component {
 }
 
 class Vote extends React.Component {
+
+  componentDidMount(){
+    document.title = "Feedback System"
+  }
+
   render() {
     return (
       <div className="vote">
