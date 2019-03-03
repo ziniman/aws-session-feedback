@@ -116,7 +116,7 @@ class Options extends React.Component {
     } else {
     return (
       <div className="container">
-        <div className="row m-2 text-center justify-content-center"><h2>Feedback System</h2></div>
+        <div className="row m-2 text-center justify-content-center"><h2>AWS Summit Tel Aviv - Feedback System</h2></div>
         <div className="row m-2 text-center justify-content-center"><h3>{items['session_name']}</h3></div>
         <div className="row m-2 text-center justify-content-center"><h6>({items['date_time']})</h6></div>
         <div className="row m-2 text-center justify-content-center">
