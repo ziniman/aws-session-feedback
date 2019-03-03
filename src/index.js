@@ -101,7 +101,7 @@ class Options extends React.Component {
         return (
           <div className="container">
             <div className="row m-2 text-center justify-content-center"><h2>Thanks for your feedback!</h2></div>
-            <div className="row m-2 text-center justify-content-center"><h5>We have recorded the score <b>{score}</b> for the session <b>{items['session_name']}</b> by {items['speaker']}.</h5></div>
+            <div className="row m-2 text-center justify-content-center"><h5>We have recorded the score <b>{score}</b> for the session <b>{items['session_name']}</b>.</h5></div>
           </div>
         );
     }
@@ -117,7 +117,7 @@ class Options extends React.Component {
     return (
       <div className="container">
         <div className="row m-2 text-center justify-content-center"><h2>Feedback System</h2></div>
-        <div className="row m-2 text-center justify-content-center"><h3>{items['session_name']} by {items['speaker']}</h3></div>
+        <div className="row m-2 text-center justify-content-center"><h3>{items['session_name']}</h3></div>
         <div className="row m-2 text-center justify-content-center"><h6>({items['date_time']})</h6></div>
         <div className="row m-2 text-center justify-content-center">
           {this.renderOptions(1)}
