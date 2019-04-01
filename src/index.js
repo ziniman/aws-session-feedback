@@ -6,7 +6,7 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-const API_ENDPOINT = process.env.BACKEND_API;
+const API_ENDPOINT = process.env.REACT_APP_BACKEND_API;
 
 if (!cookies.get('userID')) cookies.set('userID', guid(), { path: '/' });
 var user_id = cookies.get('userID');
