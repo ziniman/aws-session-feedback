@@ -57,15 +57,6 @@ functions:
           method: post
           cors: true
           integration: lambda
-  WriteSQL:
-    handler: write_sql.write_sql
-    vpc:
-      securityGroupIds:
-        - sg-061c6de2d764cf569
-      subnetIds:
-        - subnet-33645457
-        - subnet-32724644
-        - subnet-fb7904a3
 
 resources:
   Resources:

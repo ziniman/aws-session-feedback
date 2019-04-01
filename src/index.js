@@ -6,6 +6,8 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
+const API_ENDPOINT = process.env.REACT_APP_BACKEND_API;
+
 if (!cookies.get('userID')) cookies.set('userID', guid(), { path: '/' });
 var user_id = cookies.get('userID');
 
@@ -55,7 +57,7 @@ class Options extends React.Component {
   }
 
   componentDidMount() {
-    fetch("https://s2cahw9tya.execute-api.eu-west-1.amazonaws.com/dev/info/get_session?id=" + session_id)
+    fetch(API_ENDPOINT + "/info/get_session?id=" + session_id)
       .then(res => res.json())
       .then(
         (result) => {
@@ -79,7 +81,7 @@ class Options extends React.Component {
     this.setState({hide: true});
     this.setState({score: a});
 
-    fetch('https://s2cahw9tya.execute-api.eu-west-1.amazonaws.com/dev/info/store_feedback', {
+    fetch(API_ENDPOINT + '/info/store_feedback', {
         method: 'POST',
         headers : {'Content-Type': 'application/json'},
         body:JSON.stringify({user_id:user_id, session_id:session_id, score:a})
