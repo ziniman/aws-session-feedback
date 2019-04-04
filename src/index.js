@@ -7,7 +7,7 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 const API_ENDPOINT = process.env.REACT_APP_BACKEND_API;
-const EVENT_NAME = process.env.REACT_APP_EVENT_NAME
+var EVENT_NAME = process.env.REACT_APP_EVENT_NAME
 
 if (!EVENT_NAME) {
   EVENT_NAME = 'AWS Events';
@@ -16,7 +16,7 @@ if (!EVENT_NAME) {
 if (!cookies.get('userID')) cookies.set('userID', guid(), { path: '/' });
 var user_id = cookies.get('userID');
 
-var colors = ['bg-danger', 'bg-info', 'bg-warning', 'bg-primary', 'bg-success']
+const colors = ['bg-danger', 'bg-info', 'bg-warning', 'bg-primary', 'bg-success']
 
 function guid() {
   function s4() {
