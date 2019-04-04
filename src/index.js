@@ -9,7 +9,7 @@ const cookies = new Cookies();
 const API_ENDPOINT = process.env.REACT_APP_BACKEND_API;
 const EVENT_NAME = process.env.REACT_APP_EVENT_NAME
 
-if (EVENT_NAME=='') {
+if (!EVENT_NAME) {
   EVENT_NAME = 'AWS Events';
 }
 

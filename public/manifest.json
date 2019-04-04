@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Session Feedback React App",
+  "name": "A demo app using AWS Amplify",
   "icons": [
     {
       "src": "favicon.ico",
