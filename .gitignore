@@ -25,4 +25,5 @@ yarn-error.log*
 
 serverless/.serverless/*
 serverless/*.csv
+serverless/*.zip
 serverless/parse.py
