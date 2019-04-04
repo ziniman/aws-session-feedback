@@ -7,6 +7,11 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 const API_ENDPOINT = process.env.REACT_APP_BACKEND_API;
+const EVENT_NAME = process.env.REACT_APP_EVENT_NAME
+
+if (EVENT_NAME=='') {
+  EVENT_NAME = 'AWS Events';
+}
 
 if (!cookies.get('userID')) cookies.set('userID', guid(), { path: '/' });
 var user_id = cookies.get('userID');
@@ -118,7 +123,7 @@ class Options extends React.Component {
     } else {
     return (
       <div className="container">
-        <div className="row m-2 text-center justify-content-center"><h2>AWS Summit Tel Aviv Sessions Feedback</h2></div>
+        <div className="row m-2 text-center justify-content-center"><h2>{EVENT_NAME}<br />Session Feedback</h2></div>
         <div className="row m-2 text-center justify-content-center"><h4>{items['session_name']}</h4></div>
         <div className="row m-2 text-center justify-content-center"><h6>({items['date_time']})</h6></div>
         <div className="row m-2 text-center justify-content-center">
