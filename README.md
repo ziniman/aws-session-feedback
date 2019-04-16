@@ -12,6 +12,10 @@
 - Final stage
   - Commit and push your code to your repo so Amazon Amplify will push an updated version of your code to the front end.
 
+## Setting Event name
+You can customize the event name displayed on top of the page, by setting a new Environment variable named ```REACT_APP_EVENT_NAME```.
+In case you don't set this variable or leave it empty, the page will display 'AWS Events' as the default event name.
+
 ## Sessions Table - DB Structure
 (Primary partition key - session_id )
 ~~~~
