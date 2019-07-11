@@ -17,6 +17,7 @@ You can customize the event name displayed on top of the page, by setting a new 
 In case you don't set this variable or leave it empty, the page will display 'AWS Events' as the default event name.
 
 ## Sessions Table - DB Structure
+Go into the AWS Console DynamoDB and create an new item per session using the DynamoDB JSON txt format with the following format:
 (Primary partition key - session_id )
 ~~~~
 {
@@ -27,7 +28,7 @@ In case you don't set this variable or leave it empty, the page will display 'AW
     "S": "AWS Summit"
   },
   "location": {
-    "S": Berlin, Germany"
+    "S": "Berlin, Germany"
   },
   "session_id": {
     "S": "0488ED90FECC482115B0D3C7F54E272B"
@@ -42,7 +43,7 @@ In case you don't set this variable or leave it empty, the page will display 'AW
     "N": "1584021000"
   }
 }
-~~~~
+
 
 ## URL Structure
 https://[AMPLIFY URL]?session_id=[session_id]
