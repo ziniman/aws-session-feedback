@@ -4,7 +4,7 @@ plugins:
   - serverless-python-requirements
 provider:
   name: aws
-  runtime: python2.7
+  runtime: python3.7
   stackName: ${self:service}-CF-Template
   logRetentionInDays: 7
   region: eu-west-1

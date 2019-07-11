@@ -35,9 +35,9 @@ def get_session(event, context):
     session_id = event['queryStringParameters']['id']
 
     try:
-	response = sessions_table.query(
-	    KeyConditionExpression=Key('session_id').eq(session_id)
-    )
+        response = sessions_table.query(
+            KeyConditionExpression=Key('session_id').eq(session_id)
+        )
 
     except ClientError as e:
         logger.error(e.response['Error']['Message'])
