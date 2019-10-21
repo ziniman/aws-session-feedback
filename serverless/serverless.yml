@@ -57,6 +57,16 @@ functions:
           method: post
           cors: true
           integration: lambda
+  StreamData:
+    handler: session-feedback-scores-to-firehose.lambda_handler
+    events:
+      - stream:
+          type: dynamodb
+          arn:
+            Fn::GetAtt:
+              - feebackScores
+              - Arn
+
 
 resources:
   Resources:
