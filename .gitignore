@@ -27,3 +27,6 @@ serverless/.serverless/*
 serverless/*.csv
 serverless/*.zip
 serverless/parse.py
+
+serverless/qr_codes
+serverless/qr.py
